@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import readFile from '../src/parse.js';
+import readFile from '../src/parser.js';
 
 const program = new Command();
 
