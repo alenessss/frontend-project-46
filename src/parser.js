@@ -8,11 +8,14 @@ const findFile = (filename) => {
     process.cwd(), // Ищем в текущей директории
   ];
 
-  for (const dir of directories) {
-    const filepath = path.resolve(dir, filename);
-    if (fs.existsSync(filepath)) {
-      return filepath; // Возвращаем путь, если файл найден
-    }
+  // Используем метод find для поиска файла
+  const filepath = directories.find((dir) => {
+    const fullPath = path.resolve(dir, filename);
+    return fs.existsSync(fullPath);
+  });
+
+  if (filepath) {
+    return path.resolve(filepath, filename); // Возвращаем полный путь к файлу
   }
 
   throw new Error(`File "${filename}" not found in ${directories.join(', ')}`);

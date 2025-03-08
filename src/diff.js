@@ -10,24 +10,22 @@ const genDiff = (filepath1, filepath2) => {
     const keys2 = Object.keys(data2);
     const allKeys = _.sortBy(_.union(keys1, keys2));
 
-    const diff = allKeys.map(key => {
+    const diff = allKeys.map((key) => {
       const value1 = data1[key];
       const value2 = data2[key];
 
       if (_.has(data1, key) && _.has(data2, key)) {
         if (_.isEqual(value1, value2)) {
           return `  ${key}: ${value1}`;
-        } else {
-          return [
-            `- ${key}: ${value1}`,
-            `+ ${key}: ${value2}`
-          ].join('\n');
         }
-      } else if (_.has(data1, key)) {
+        return [
+          `- ${key}: ${value1}`,
+          `+ ${key}: ${value2}`,
+        ].join('\n');
+      } if (_.has(data1, key)) {
         return `- ${key}: ${value1}`;
-      } else {
-        return `+ ${key}: ${value2}`;
       }
+      return `+ ${key}: ${value2}`;
     });
 
     return `{\n${diff.join('\n')}\n}`;
